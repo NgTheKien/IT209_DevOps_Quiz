@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phòng thi DevOps Fundamental · Trắc nghiệm 40 câu 30 phút</title>
+<style>
+:root{
+  --paper:#f5efe2; --paper2:#fbf7ee; --ink:#1d2a44; --muted:#6b6455; --rule:#d9cfba;
+  --red:#c2412b; --green:#2f7a4f; --amber:#c98a16; --blue:#2c5d9e;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.5;
+  background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(44,93,158,.07) 31px 32px);
+  padding-bottom:72px;}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px double var(--ink);padding-bottom:12px;margin-bottom:24px;gap:16px;flex-wrap:wrap}
+.brand small{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+.brand h1{margin:2px 0 0;font-size:clamp(28px,4vw,44px);line-height:1.05;font-weight:700;letter-spacing:-.01em}
+.brand h1 em{color:var(--red);font-style:italic}
+.meta{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right}
+code{font-family:var(--mono);font-size:.86em;background:#ebe2cf;border:1px solid var(--rule);padding:0 5px;border-radius:3px;white-space:pre-wrap}
+button{font:inherit;cursor:pointer}
+
+/* Home */
+.intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;margin-bottom:28px}
+.intro p{margin:0 0 10px}
+.rules{background:var(--paper2);border:1px solid var(--rule);padding:16px 18px;font-size:15px;transform:rotate(.4deg);box-shadow:3px 4px 0 rgba(29,42,68,.08)}
+.rules b{color:var(--red)}
+.rules ul{margin:6px 0 0;padding-left:18px}
+.exams{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.ecard{position:relative;background:var(--paper2);border:1.5px solid var(--ink);padding:18px 16px 16px;text-align:left;transition:transform .15s, box-shadow .15s;box-shadow:4px 4px 0 var(--ink)}
+.ecard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.ecard .no{font-family:var(--mono);font-size:12px;letter-spacing:.15em;color:var(--red)}
+.ecard h3{margin:4px 0 2px;font-size:26px}
+.ecard .sub{color:var(--muted);font-size:14px;min-height:42px}
+.ecard .best{margin-top:10px;font-family:var(--mono);font-size:12px;border-top:1px dashed var(--rule);padding-top:8px}
+.ecard.mix{background:var(--ink);color:var(--paper)}
+.ecard.mix .sub{color:#c9c2b2}.ecard.mix .no{color:#f3b27a}.ecard.mix .best{border-color:#4a5672}
+.topics{margin-top:26px;font-size:14px;color:var(--muted)}
+.chip{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border:1px solid var(--rule);border-radius:20px;margin:2px;background:var(--paper2);color:var(--ink)}
+
+/* Exam */
+.bar{position:sticky;top:0;z-index:5;background:rgba(245,239,226,.96);backdrop-filter:blur(4px);border-bottom:1px solid var(--rule);margin:0 -20px 18px;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bar .title{font-weight:700;font-size:19px}
+.timer{font-family:var(--mono);font-size:22px;font-weight:700;padding:2px 12px;border:2px solid var(--ink);border-radius:4px;letter-spacing:.05em}
+.timer.warn{color:var(--red);border-color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.prog{flex:1;min-width:120px;height:8px;background:#e5dbc6;border-radius:8px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--blue);width:0;transition:width .2s}
+.btn{border:1.5px solid var(--ink);background:var(--paper2);padding:7px 14px;border-radius:3px}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn.ghost{background:transparent}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:22px;align-items:start}
+.qcard{background:var(--paper2);border:1px solid var(--rule);padding:22px 24px;box-shadow:0 1px 0 var(--rule),4px 5px 0 rgba(29,42,68,.06);min-height:360px}
+.qhead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:8px}
+.qtext{font-size:21px;line-height:1.4;margin:0 0 18px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:transparent;border:1.5px solid var(--rule);border-radius:4px;padding:11px 14px;margin-bottom:10px;transition:border-color .12s, background .12s}
+.opt:hover{border-color:var(--ink)}
+.opt .k{flex:none;width:28px;height:28px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:700}
+.opt.sel{border-color:var(--blue);background:#e7eef8}
+.opt.sel .k{background:var(--blue);border-color:var(--blue);color:#fff}
+.opt.right{border-color:var(--green);background:#e4f1e8}.opt.right .k{background:var(--green);border-color:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:#f7e3df}.opt.wrong .k{background:var(--red);border-color:var(--red);color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:16px;gap:10px}
+.flag{font-family:var(--mono);font-size:12px;background:none;border:1px dashed var(--amber);color:var(--amber);padding:4px 10px;border-radius:3px}
+.flag.on{background:var(--amber);color:#fff;border-style:solid}
+.explain{margin-top:14px;padding:12px 14px;border-left:4px solid var(--green);background:#eef5ee;font-size:15px}
+.explain.bad{border-color:var(--red);background:#faeeea}
+.side{position:sticky;top:70px;background:var(--paper2);border:1px solid var(--rule);padding:14px}
+.side h4{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.cell{aspect-ratio:1;border:1.5px solid var(--rule);background:#fff;font-family:var(--mono);font-size:12px;border-radius:3px;padding:0}
+.cell.done{background:var(--blue);border-color:var(--blue);color:#fff}
+.cell.cur{outline:2px solid var(--ink);outline-offset:1px}
+.cell.flagged{border-color:var(--amber);box-shadow:inset 0 -4px 0 var(--amber)}
+.cell.ok{background:var(--green);border-color:var(--green);color:#fff}
+.cell.no{background:var(--red);border-color:var(--red);color:#fff}
+.cell.skip{background:#e5dbc6}
+.legend{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.7}
+.legend span{display:inline-block;width:10px;height:10px;margin-right:4px;vertical-align:-1px;border-radius:2px}
+
+/* Result */
+.result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:26px;margin-bottom:24px}
+.scorebox{position:relative;background:var(--paper2);border:1.5px solid var(--ink);padding:24px;box-shadow:5px 5px 0 var(--ink)}
+.big{font-size:84px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.big small{font-size:28px;color:var(--muted)}
+.stamp{position:absolute;right:18px;top:18px;transform:rotate(-12deg);border:3px solid var(--red);color:var(--red);font-family:var(--mono);font-weight:700;letter-spacing:.12em;padding:6px 12px;border-radius:6px;font-size:15px;opacity:.85;text-transform:uppercase}
+.stamp.pass{border-color:var(--green);color:var(--green)}
+.facts{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:10px}
+.topicrow{display:grid;grid-template-columns:90px minmax(0,1fr) 54px;gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.topicrow .tb{height:12px;background:#e5dbc6;border-radius:6px;overflow:hidden}
+.topicrow .tb i{display:block;height:100%}
+.topicrow .pct{font-family:var(--mono);font-size:12px;text-align:right}
+.weak{margin-top:14px;font-size:15px;padding:10px 12px;border:1px dashed var(--red);background:#fbefe9}
+.filter{display:flex;gap:8px;margin:10px 0 14px;flex-wrap:wrap}
+.filter .btn.on{background:var(--ink);color:var(--paper)}
+.rv{background:var(--paper2);border:1px solid var(--rule);padding:16px 18px;margin-bottom:12px}
+.rv .qtext{font-size:17px;margin-bottom:10px}
+.rv .opt{padding:7px 10px;margin-bottom:6px;font-size:15px;cursor:default}
+.rv .opt .k{width:22px;height:22px;font-size:11px}
+.hidden{display:none!important}
+
+@media (max-width:820px){
+  .intro,.result,.layout{grid-template-columns:minmax(0,1fr)}
+  .exams{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,minmax(0,1fr))}
+}
+@media print{
+  body{background-image:none;padding:0}
+  .bar,.side,.nav,.filter,#home .exams,.flag{display:none!important}
+  .rv{break-inside:avoid}
+  .scorebox{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <small>IT209 · DevOps Fundamental · PTIT/Rikkei</small>
+      <h1>Phòng thi <em>trắc nghiệm</em></h1>
+    </div>
+    <div class="meta">Thí sinh: <input id="who" placeholder="Nhập tên bạn" style="font:inherit;border:none;border-bottom:1px dashed var(--muted);background:transparent;width:150px;text-align:right;color:var(--ink)"><br><span id="today"></span></div>
+  </header>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="intro">
+      <div>
+        <p><b>3 đề × 40 câu</b>, bám 5 Session của đề cương (VPS & Nginx, Git, Linux, Docker, CI/CD) và những lỗi chính bạn đã gặp khi làm bài tập. Thử như thi thật: <b>30 phút</b>, nộp bài xong mới xem đáp án.</p>
+        <p>Thứ tự đáp án được <b>xáo trộn mỗi lần làm</b>, nên đừng học thuộc “câu 5 chọn B”, hãy nhớ nội dung.</p>
+      </div>
+      <div class="rules">
+        <b>Quy chế phòng thi</b>
+        <ul>
+          <li>Hết giờ hệ thống tự thu bài.</li>
+          <li>Phím <code>1–4</code> hoặc <code>A–D</code> để chọn, <code>←</code> <code>→</code> chuyển câu, <code>F</code> đánh dấu.</li>
+          <li>Đạt ≥ 8/10 là tự tin vào phòng thi.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exams" id="examList"></div>
+    <div class="topics" id="topicChips"></div>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" class="hidden">
+    <div class="bar">
+      <span class="title" id="exTitle"></span>
+      <span class="timer" id="timer">30:00</span>
+      <div class="prog"><i id="progBar"></i></div>
+      <span class="meta" id="progTxt" style="text-align:left"></span>
+      <button class="btn primary" id="submitBtn">Nộp bài</button>
+    </div>
+    <div class="layout">
+      <div>
+        <div class="qcard" id="qcard"></div>
+        <div class="nav">
+          <button class="btn" id="prevBtn">← Câu trước</button>
+          <button class="btn" id="nextBtn">Câu sau →</button>
+        </div>
+      </div>
+      <aside class="side">
+        <h4>Bảng câu hỏi</h4>
+        <div class="grid" id="grid"></div>
+        <div class="legend">
+          <span style="background:var(--blue)"></span>Đã làm &nbsp;
+          <span style="background:#fff;border:1px solid var(--rule)"></span>Chưa làm<br>
+          <span style="background:var(--amber)"></span>Đánh dấu xem lại
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="hidden">
+    <div class="result">
+      <div class="scorebox">
+        <div class="stamp" id="stamp"></div>
+        <div class="meta" style="text-align:left" id="rsTitle"></div>
+        <div class="big" id="rsScore"></div>
+        <div class="facts" id="rsFacts"></div>
+        <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+          <button class="btn primary" id="retryBtn">Làm lại đề này</button>
+          <button class="btn" id="homeBtn">Chọn đề khác</button>
+          <button class="btn ghost" onclick="window.print()">In kết quả</button>
+        </div>
+      </div>
+      <div>
+        <h4 class="meta" style="text-align:left;letter-spacing:.15em;text-transform:uppercase;margin:0 0 6px">Điểm theo chủ đề</h4>
+        <div id="topicStats"></div>
+        <div class="weak" id="weakBox"></div>
+      </div>
+    </div>
+    <div class="filter">
+      <button class="btn on" data-f="wrong">Câu sai & bỏ trống</button>
+      <button class="btn" data-f="all">Tất cả câu</button>
+      <button class="btn" data-f="flag">Đã đánh dấu</button>
+    </div>
+    <div id="review"></div>
+  </section>
+</div>
+
+<script src="questions.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = s => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const LET = "ABCD";
+const TOPICS = ["DevOps","VPS","Nginx","Linux","Git","Docker","Compose","CI/CD"];
+const COLORS = {DevOps:"#6b4fa0",VPS:"#2c5d9e",Nginx:"#2f7a4f",Linux:"#c98a16",Git:"#c2412b",Docker:"#1f7a8c",Compose:"#3b6e4a","CI/CD":"#8a3b6e"};
+const DURATION = 30 * 60;
+
+$("#today").textContent = new Date().toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
+
+const who = $("#who");
+who.value = localStorage.getItem("dq_name") || "";
+who.oninput = () => localStorage.setItem("dq_name", who.value);
+
+const ALL = EXAMS.flatMap(e => e.qs);
+const examDefs = [...EXAMS, { id: "mix", name: "Đề trộn", sub: "40 câu ngẫu nhiên từ ngân hàng 120 câu", mix: true }];
+const best = id => { try { return JSON.parse(localStorage.getItem("dq_best_" + id)); } catch { return null; } };
+
+function renderHome() {
+  $("#examList").innerHTML = examDefs.map((e, i) => {
+    const b = best(e.id);
+    return `<button class="ecard ${e.mix ? "mix" : ""}" data-i="${i}">
+      <div class="no">${e.mix ? "NGẪU NHIÊN" : "MÃ ĐỀ 00" + (i + 1)}</div>
+      <h3>${e.name}</h3><div class="sub">${e.sub}</div>
+      <div class="best">${b ? `Cao nhất: <b>${b.score.toFixed(1)}</b>/10 · ${b.correct}/40` : "Chưa làm"}</div></button>`;
+  }).join("");
+  document.querySelectorAll(".ecard").forEach(el => el.onclick = () => start(examDefs[+el.dataset.i]));
+  const cnt = {}; ALL.forEach(q => cnt[q.t] = (cnt[q.t] || 0) + 1);
+  $("#topicChips").innerHTML = "Ngân hàng 120 câu: " + TOPICS.filter(t => cnt[t]).map(t => `<span class="chip" style="border-color:${COLORS[t]}">${t} · ${cnt[t]}</span>`).join("");
+  show("home");
+}
+
+let S = null, tick = null;
+function start(def) {
+  const base = def.mix ? shuffle(ALL).slice(0, 40) : shuffle(def.qs);
+  S = {
+    def, cur: 0, left: DURATION, done: false, filter: "wrong",
+    items: base.map(q => { const order = shuffle([0, 1, 2, 3]); return { q, order, ans: null, flag: false }; })
+  };
+  $("#exTitle").textContent = def.name + " · " + def.sub;
+  clearInterval(tick);
+  tick = setInterval(() => { S.left--; drawTimer(); if (S.left <= 0) finish(); }, 1000);
+  drawTimer(); drawQ(); drawGrid(); show("exam");
+}
+
+function drawTimer() {
+  const m = Math.max(0, S.left) / 60 | 0, s = Math.max(0, S.left) % 60;
+  const t = $("#timer"); t.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  t.classList.toggle("warn", S.left <= 300);
+}
+
+function drawQ() {
+  const it = S.items[S.cur], q = it.q;
+  $("#qcard").innerHTML = `
+    <div class="qhead"><span>CÂU ${S.cur + 1} / ${S.items.length}</span><span style="color:${COLORS[q.t]}">● ${q.t}</span></div>
+    <p class="qtext">${fmt(q.q)}</p>
+    ${it.order.map((oi, k) => `<button class="opt ${it.ans === oi ? "sel" : ""}" data-oi="${oi}"><span class="k">${LET[k]}</span><span>${fmt(q.o[oi])}</span></button>`).join("")}
+    <button class="flag ${it.flag ? "on" : ""}" id="flagBtn">${it.flag ? "★ Đã đánh dấu" : "☆ Đánh dấu xem lại"}</button>`;
+  document.querySelectorAll("#qcard .opt").forEach(b => b.onclick = () => pick(+b.dataset.oi));
+  $("#flagBtn").onclick = toggleFlag;
+  $("#prevBtn").disabled = S.cur === 0;
+  $("#nextBtn").textContent = S.cur === S.items.length - 1 ? "Về câu 1 ↺" : "Câu sau →";
+  const n = S.items.filter(x => x.ans !== null).length;
+  $("#progBar").style.width = (n / S.items.length * 100) + "%";
+  $("#progTxt").textContent = `${n}/${S.items.length} câu`;
+}
+function pick(oi) {
+  S.items[S.cur].ans = oi; drawQ(); drawGrid();
+  setTimeout(() => { if (!S.done && S.cur < S.items.length - 1) go(S.cur + 1); }, 260);
+}
+function toggleFlag() { const it = S.items[S.cur]; it.flag = !it.flag; drawQ(); drawGrid(); }
+function go(i) { S.cur = (i + S.items.length) % S.items.length; drawQ(); drawGrid(); }
+function drawGrid() {
+  $("#grid").innerHTML = S.items.map((it, i) =>
+    `<button class="cell ${it.ans !== null ? "done" : ""} ${it.flag ? "flagged" : ""} ${i === S.cur ? "cur" : ""}" data-i="${i}">${i + 1}</button>`).join("");
+  document.querySelectorAll("#grid .cell").forEach(c => c.onclick = () => go(+c.dataset.i));
+}
+$("#prevBtn").onclick = () => go(S.cur - 1);
+$("#nextBtn").onclick = () => go(S.cur + 1);
+$("#submitBtn").onclick = () => {
+  const blank = S.items.filter(x => x.ans === null).length;
+  if (blank && !confirm(`Còn ${blank} câu chưa làm. Vẫn nộp bài?`)) return;
+  finish();
+};
+
+document.addEventListener("keydown", e => {
+  if (!S || S.done || $("#exam").classList.contains("hidden")) return;
+  const k = e.key.toUpperCase();
+  const idx = "1234".indexOf(k) >= 0 ? "1234".indexOf(k) : LET.indexOf(k);
+  if (idx >= 0 && k.length === 1) pick(S.items[S.cur].order[idx]);
+  else if (e.key === "ArrowRight") go(S.cur + 1);
+  else if (e.key === "ArrowLeft") go(S.cur - 1);
+  else if (k === "F") toggleFlag();
+});
+
+function finish() {
+  if (S.done) return;
+  S.done = true; clearInterval(tick);
+  const correct = S.items.filter(x => x.ans === x.q.a).length;
+  const blank = S.items.filter(x => x.ans === null).length;
+  const score = Math.round(correct / S.items.length * 100) / 10;
+  const used = DURATION - Math.max(0, S.left);
+  const b = best(S.def.id);
+  if (!b || score > b.score) localStorage.setItem("dq_best_" + S.def.id, JSON.stringify({ score, correct }));
+
+  $("#rsTitle").textContent = S.def.name + " · " + S.def.sub;
+  $("#rsScore").innerHTML = `${score.toFixed(1)}<small> / 10</small>`;
+  $("#rsFacts").innerHTML = `Đúng ${correct} · Sai ${S.items.length - correct - blank} · Bỏ trống ${blank}<br>Thời gian làm: ${used / 60 | 0} phút ${used % 60} giây`;
+  const st = $("#stamp");
+  st.textContent = score >= 8 ? "Sẵn sàng" : score >= 5 ? "Đạt · Ôn thêm" : "Chưa đạt";
+  st.className = "stamp" + (score >= 8 ? " pass" : "");
+
+  const per = {};
+  S.items.forEach(x => { const p = per[x.q.t] = per[x.q.t] || { n: 0, c: 0 }; p.n++; if (x.ans === x.q.a) p.c++; });
+  const rows = TOPICS.filter(t => per[t]).map(t => ({ t, ...per[t], r: per[t].c / per[t].n }));
+  $("#topicStats").innerHTML = rows.map(r =>
+    `<div class="topicrow"><span>${r.t}</span><div class="tb"><i style="width:${r.r * 100}%;background:${COLORS[r.t]}"></i></div><span class="pct">${r.c}/${r.n}</span></div>`).join("");
+  const weak = rows.filter(r => r.r < 0.7).sort((a, b) => a.r - b.r);
+  $("#weakBox").innerHTML = weak.length
+    ? `<b>Cần ôn lại:</b> ${weak.map(w => w.t).join(", ")}. Lọc “Câu sai” bên dưới và đọc kỹ phần giải thích.`
+    : `<b>Không có chủ đề nào dưới 70%.</b> Thử Đề trộn để kiểm tra độ ổn định.`;
+  S.filter = "wrong"; drawReview(); show("result");
+}
+
+function drawReview() {
+  document.querySelectorAll(".filter .btn").forEach(b => b.classList.toggle("on", b.dataset.f === S.filter));
+  const list = S.items.map((x, i) => ({ ...x, i })).filter(x =>
+    S.filter === "all" ? true : S.filter === "flag" ? x.flag : x.ans !== x.q.a);
+  $("#review").innerHTML = list.length ? list.map(x => {
+    const ok = x.ans === x.q.a;
+    return `<div class="rv">
+      <div class="qhead"><span>CÂU ${x.i + 1} · ${ok ? "✓ ĐÚNG" : x.ans === null ? "— BỎ TRỐNG" : "✗ SAI"}${x.flag ? " · ★" : ""}</span><span style="color:${COLORS[x.q.t]}">● ${x.q.t}</span></div>
+      <p class="qtext">${fmt(x.q.q)}</p>
+      ${x.order.map((oi, k) => `<div class="opt ${oi === x.q.a ? "right" : oi === x.ans ? "wrong" : ""}"><span class="k">${LET[k]}</span><span>${fmt(x.q.o[oi])}</span></div>`).join("")}
+      ${x.q.e ? `<div class="explain ${ok ? "" : "bad"}">${fmt(x.q.e)}</div>` : ""}
+    </div>`;
+  }).join("") : `<p class="meta" style="text-align:left">Không có câu nào trong mục này. 🎉</p>`;
+}
+document.querySelectorAll(".filter .btn").forEach(b => b.onclick = () => { S.filter = b.dataset.f; drawReview(); });
+$("#retryBtn").onclick = () => start(S.def);
+$("#homeBtn").onclick = renderHome;
+
+function show(id) { ["home", "exam", "result"].forEach(s => $("#" + s).classList.toggle("hidden", s !== id)); window.scrollTo(0, 0); }
+window.addEventListener("beforeunload", e => { if (S && !S.done && !$("#exam").classList.contains("hidden")) { e.preventDefault(); e.returnValue = ""; } });
+renderHome();
+</script>
+</body>
+</html>
