@@ -31,7 +31,7 @@ button{font:inherit;cursor:pointer}
 .rules{background:var(--paper2);border:1px solid var(--rule);padding:16px 18px;font-size:15px;transform:rotate(.4deg);box-shadow:3px 4px 0 rgba(29,42,68,.08)}
 .rules b{color:var(--red)}
 .rules ul{margin:6px 0 0;padding-left:18px}
-.exams{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.exams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ecard{position:relative;background:var(--paper2);border:1.5px solid var(--ink);padding:18px 16px 16px;text-align:left;transition:transform .15s, box-shadow .15s;box-shadow:4px 4px 0 var(--ink)}
 .ecard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
 .ecard .no{font-family:var(--mono);font-size:12px;letter-spacing:.15em;color:var(--red)}
@@ -132,7 +132,7 @@ button{font:inherit;cursor:pointer}
   <section id="home">
     <div class="intro">
       <div>
-        <p><b>3 đề × 40 câu</b>, bám 5 Session của đề cương (VPS & Nginx, Git, Linux, Docker, CI/CD) và những lỗi chính bạn đã gặp khi làm bài tập. Thử như thi thật: <b>30 phút</b>, nộp bài xong mới xem đáp án.</p>
+        <p><b>5 đề × 40 câu</b>, bám 5 Session của đề cương (VPS & Nginx, Git, Linux, Docker, CI/CD) và những lỗi chính bạn đã gặp khi làm bài tập. Thử như thi thật: <b>30 phút</b>, nộp bài xong mới xem đáp án.</p>
         <p>Thứ tự đáp án được <b>xáo trộn mỗi lần làm</b>, nên đừng học thuộc “câu 5 chọn B”, hãy nhớ nội dung.</p>
       </div>
       <div class="rules">
@@ -224,7 +224,7 @@ who.value = localStorage.getItem("dq_name") || "";
 who.oninput = () => localStorage.setItem("dq_name", who.value);
 
 const ALL = EXAMS.flatMap(e => e.qs);
-const examDefs = [...EXAMS, { id: "mix", name: "Đề trộn", sub: "40 câu ngẫu nhiên từ ngân hàng 120 câu", mix: true }];
+const examDefs = [...EXAMS, { id: "mix", name: "Đề trộn", sub: `40 câu ngẫu nhiên từ ngân hàng ${ALL.length} câu`, mix: true }];
 const best = id => { try { return JSON.parse(localStorage.getItem("dq_best_" + id)); } catch { return null; } };
 
 function renderHome() {
@@ -237,7 +237,7 @@ function renderHome() {
   }).join("");
   document.querySelectorAll(".ecard").forEach(el => el.onclick = () => start(examDefs[+el.dataset.i]));
   const cnt = {}; ALL.forEach(q => cnt[q.t] = (cnt[q.t] || 0) + 1);
-  $("#topicChips").innerHTML = "Ngân hàng 120 câu: " + TOPICS.filter(t => cnt[t]).map(t => `<span class="chip" style="border-color:${COLORS[t]}">${t} · ${cnt[t]}</span>`).join("");
+  $("#topicChips").innerHTML = `Ngân hàng ${ALL.length} câu: ` + TOPICS.filter(t => cnt[t]).map(t => `<span class="chip" style="border-color:${COLORS[t]}">${t} · ${cnt[t]}</span>`).join("");
   show("home");
 }
 
