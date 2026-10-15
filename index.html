@@ -17,7 +17,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-h1,h3,.big{font-family:var(--serif)}
+h1,h2,h3,.big,.hscore{font-family:var(--serif)}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(44,93,158,.07) 31px 32px);
@@ -29,14 +29,20 @@ header.top{display:flex;justify-content:space-between;align-items:flex-end;borde
 .brand h1 em{color:var(--red);font-style:italic}
 .meta{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right}
 code{font-family:var(--mono);font-size:.86em;background:#ebe2cf;border:1px solid var(--rule);padding:0 5px;border-radius:3px;white-space:pre-wrap}
-button{font:inherit;cursor:pointer}
+button{font:inherit;cursor:pointer;color:inherit}
 
 /* Home */
-.intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;margin-bottom:28px}
+.intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;margin-bottom:22px}
 .intro p{margin:0 0 10px}
 .rules{background:var(--paper2);border:1px solid var(--rule);padding:16px 18px;font-size:15px;transform:rotate(.4deg);box-shadow:3px 4px 0 rgba(29,42,68,.08)}
 .rules b{color:var(--red)}
 .rules ul{margin:6px 0 0;padding-left:18px}
+.modebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding:12px 14px;background:var(--paper2);border:1px solid var(--rule)}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:4px;overflow:hidden}
+.seg button{border:none;background:var(--paper2);padding:7px 16px;font-weight:500}
+.seg button+button{border-left:1.5px solid var(--ink)}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.hint{font-size:14px;color:var(--muted);flex:1;min-width:220px}
 .exams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ecard{position:relative;background:var(--paper2);border:1.5px solid var(--ink);padding:18px 16px 16px;text-align:left;transition:transform .15s, box-shadow .15s;box-shadow:4px 4px 0 var(--ink)}
 .ecard:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
@@ -48,22 +54,27 @@ button{font:inherit;cursor:pointer}
 .ecard.mix .sub{color:#c9c2b2}.ecard.mix .no{color:#f3b27a}.ecard.mix .best{border-color:#4a5672}
 .topics{margin-top:26px;font-size:14px;color:var(--muted)}
 .chip{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border:1px solid var(--rule);border-radius:20px;margin:2px;background:var(--paper2);color:var(--ink)}
+.badge{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 9px;border-radius:20px;border:1px solid;white-space:nowrap}
+.badge.exam{color:var(--red);border-color:var(--red)}
+.badge.practice{color:var(--blue);border-color:var(--blue)}
 
 /* Exam */
 .bar{position:sticky;top:0;z-index:5;background:rgba(245,239,226,.96);backdrop-filter:blur(4px);border-bottom:1px solid var(--rule);margin:0 -20px 18px;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.bar .title{font-weight:700;font-size:19px}
+.bar .title{font-weight:700;font-size:18px}
 .timer{font-family:var(--mono);font-size:22px;font-weight:700;padding:2px 12px;border:2px solid var(--ink);border-radius:4px;letter-spacing:.05em}
 .timer.warn{color:var(--red);border-color:var(--red);animation:pulse 1s infinite}
+.timer.practice{color:var(--blue);border-color:var(--blue);font-size:16px}
 @keyframes pulse{50%{opacity:.55}}
 .prog{flex:1;min-width:120px;height:8px;background:#e5dbc6;border-radius:8px;overflow:hidden}
 .prog i{display:block;height:100%;background:var(--blue);width:0;transition:width .2s}
 .btn{border:1.5px solid var(--ink);background:var(--paper2);padding:7px 14px;border-radius:3px}
 .btn.primary{background:var(--red);border-color:var(--red);color:#fff}
 .btn.ghost{background:transparent}
+.btn:disabled{opacity:.4;cursor:default}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:22px;align-items:start}
 .qcard{background:var(--paper2);border:1px solid var(--rule);padding:22px 24px;box-shadow:0 1px 0 var(--rule),4px 5px 0 rgba(29,42,68,.06);min-height:360px}
-.qhead{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:8px}
-.qtext{font-size:21px;line-height:1.4;margin:0 0 18px}
+.qhead{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:8px}
+.qtext{font-size:20px;line-height:1.45;margin:0 0 18px}
 .opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:transparent;border:1.5px solid var(--rule);border-radius:4px;padding:11px 14px;margin-bottom:10px;transition:border-color .12s, background .12s}
 .opt:hover{border-color:var(--ink)}
 .opt .k{flex:none;width:28px;height:28px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:700}
@@ -71,11 +82,17 @@ button{font:inherit;cursor:pointer}
 .opt.sel .k{background:var(--blue);border-color:var(--blue);color:#fff}
 .opt.right{border-color:var(--green);background:#e4f1e8}.opt.right .k{background:var(--green);border-color:var(--green);color:#fff}
 .opt.wrong{border-color:var(--red);background:#f7e3df}.opt.wrong .k{background:var(--red);border-color:var(--red);color:#fff}
+.opt.lock{cursor:default}.opt.lock:hover{border-color:var(--rule)}
+.opt.lock.right:hover{border-color:var(--green)}.opt.lock.wrong:hover{border-color:var(--red)}
+.fb{font-weight:700;margin:4px 0 0}.fb.ok{color:var(--green)}.fb.no{color:var(--red)}
 .nav{display:flex;justify-content:space-between;margin-top:16px;gap:10px}
-.flag{font-family:var(--mono);font-size:12px;background:none;border:1px dashed var(--amber);color:var(--amber);padding:4px 10px;border-radius:3px}
+.flag{font-family:var(--mono);font-size:12px;background:none;border:1px dashed var(--amber);color:var(--amber);padding:4px 10px;border-radius:3px;margin-top:4px}
 .flag.on{background:var(--amber);color:#fff;border-style:solid}
 .explain{margin-top:14px;padding:12px 14px;border-left:4px solid var(--green);background:#eef5ee;font-size:15px}
 .explain.bad{border-color:var(--red);background:#faeeea}
+.ref{margin-top:10px;padding:10px 14px;border:1px dashed var(--blue);background:#eef2f9;font-size:14px;border-radius:3px}
+.ref .rt{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--blue);margin-bottom:4px}
+.ref a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid currentColor}
 .side{position:sticky;top:70px;background:var(--paper2);border:1px solid var(--rule);padding:14px}
 .side h4{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -85,7 +102,6 @@ button{font:inherit;cursor:pointer}
 .cell.flagged{border-color:var(--amber);box-shadow:inset 0 -4px 0 var(--amber)}
 .cell.ok{background:var(--green);border-color:var(--green);color:#fff}
 .cell.no{background:var(--red);border-color:var(--red);color:#fff}
-.cell.skip{background:#e5dbc6}
 .legend{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.7}
 .legend span{display:inline-block;width:10px;height:10px;margin-right:4px;vertical-align:-1px;border-radius:2px}
 
@@ -94,20 +110,38 @@ button{font:inherit;cursor:pointer}
 .scorebox{position:relative;background:var(--paper2);border:1.5px solid var(--ink);padding:24px;box-shadow:5px 5px 0 var(--ink)}
 .big{font-size:84px;font-weight:700;line-height:1;letter-spacing:-.03em}
 .big small{font-size:28px;color:var(--muted)}
-.stamp{position:absolute;right:18px;top:18px;transform:rotate(-12deg);border:3px solid var(--red);color:var(--red);font-family:var(--mono);font-weight:700;letter-spacing:.12em;padding:6px 12px;border-radius:6px;font-size:15px;opacity:.85;text-transform:uppercase}
+.stamp{position:absolute;right:18px;top:18px;transform:rotate(-12deg);border:3px solid var(--red);color:var(--red);font-family:var(--mono);font-weight:700;letter-spacing:.08em;padding:6px 12px;border-radius:6px;font-size:14px;opacity:.85}
 .stamp.pass{border-color:var(--green);color:var(--green)}
+.stamp.practice{border-color:var(--blue);color:var(--blue)}
 .facts{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:10px}
+.sechead{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.12em;margin:0 0 6px}
 .topicrow{display:grid;grid-template-columns:90px minmax(0,1fr) 54px;gap:10px;align-items:center;margin:8px 0;font-size:14px}
 .topicrow .tb{height:12px;background:#e5dbc6;border-radius:6px;overflow:hidden}
 .topicrow .tb i{display:block;height:100%}
 .topicrow .pct{font-family:var(--mono);font-size:12px;text-align:right}
 .weak{margin-top:14px;font-size:15px;padding:10px 12px;border:1px dashed var(--red);background:#fbefe9}
+.weak ul{margin:6px 0 0;padding-left:18px}
+.weak a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid currentColor}
 .filter{display:flex;gap:8px;margin:10px 0 14px;flex-wrap:wrap}
 .filter .btn.on{background:var(--ink);color:var(--paper)}
 .rv{background:var(--paper2);border:1px solid var(--rule);padding:16px 18px;margin-bottom:12px}
 .rv .qtext{font-size:17px;margin-bottom:10px}
 .rv .opt{padding:7px 10px;margin-bottom:6px;font-size:15px;cursor:default}
 .rv .opt .k{width:22px;height:22px;font-size:11px}
+.rv .opt .you{margin-left:auto;font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+/* History */
+.histhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.histhead h2{margin:0;font-size:30px}
+.histsum{font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:14px}
+.hrow{display:grid;grid-template-columns:130px minmax(0,1fr) 80px 190px 96px;gap:14px;align-items:center;padding:12px 16px;background:var(--paper2);border:1px solid var(--rule);margin-bottom:8px}
+.hrow .when{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.4}
+.hrow .name{font-weight:700}
+.hrow .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.hscore{font-size:26px;font-weight:700;line-height:1}
+.hscore.pass{color:var(--green)}.hscore.fail{color:var(--red)}
+.hrow .stat{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.5}
+.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--rule);background:var(--paper2)}
 .hidden{display:none!important}
 
 @media (max-width:820px){
@@ -115,10 +149,12 @@ button{font:inherit;cursor:pointer}
   .exams{grid-template-columns:repeat(2,minmax(0,1fr))}
   .side{position:static}
   .grid{grid-template-columns:repeat(10,minmax(0,1fr))}
+  .hrow{grid-template-columns:minmax(0,1fr) auto}
+  .hrow .when,.hrow .stat{grid-column:1/-1}
 }
 @media print{
   body{background-image:none;padding:0}
-  .bar,.side,.nav,.filter,#home .exams,.flag{display:none!important}
+  .bar,.side,.nav,.filter,#home .exams,.flag,.modebar,.noprint{display:none!important}
   .rv{break-inside:avoid}
   .scorebox{box-shadow:none}
 }
@@ -138,17 +174,25 @@ button{font:inherit;cursor:pointer}
   <section id="home">
     <div class="intro">
       <div>
-        <p><b>5 đề × 40 câu</b>, bám 5 Session của đề cương (VPS & Nginx, Git, Linux, Docker, CI/CD) và những lỗi chính bạn đã gặp khi làm bài tập. Thử như thi thật: <b>30 phút</b>, nộp bài xong mới xem đáp án.</p>
+        <p><b>5 đề × 40 câu</b>, bám 5 Session của đề cương (VPS & Nginx, Git, Linux, Docker, CI/CD). Mỗi câu đều có giải thích và <b>chỉ về đúng bài lý thuyết</b> trong đề cương để ôn lại.</p>
         <p>Thứ tự đáp án được <b>xáo trộn mỗi lần làm</b>, nên đừng học thuộc “câu 5 chọn B”, hãy nhớ nội dung.</p>
       </div>
       <div class="rules">
-        <b>Quy chế phòng thi</b>
+        <b>Hai chế độ</b>
         <ul>
-          <li>Hết giờ hệ thống tự thu bài.</li>
-          <li>Phím <code>1–4</code> hoặc <code>A–D</code> để chọn, <code>←</code> <code>→</code> chuyển câu, <code>F</code> đánh dấu.</li>
-          <li>Đạt ≥ 8/10 là tự tin vào phòng thi.</li>
+          <li><b>Thi thật:</b> 30 phút, hết giờ tự thu bài, nộp xong mới xem đáp án.</li>
+          <li><b>Ôn tập:</b> không giới hạn giờ, chọn xong hiện ngay đáp án đúng và lý thuyết.</li>
+          <li>Phím <code>1–4</code> / <code>A–D</code> chọn, <code>←</code> <code>→</code> chuyển câu, <code>F</code> đánh dấu.</li>
         </ul>
       </div>
+    </div>
+    <div class="modebar">
+      <div class="seg" id="modeSeg">
+        <button data-m="exam">⏱ Thi thật</button>
+        <button data-m="practice">📖 Ôn tập</button>
+      </div>
+      <span class="hint" id="modeHint"></span>
+      <button class="btn" id="histBtn">🕘 Lịch sử làm bài</button>
     </div>
     <div class="exams" id="examList"></div>
     <div class="topics" id="topicChips"></div>
@@ -161,6 +205,7 @@ button{font:inherit;cursor:pointer}
       <span class="timer" id="timer">30:00</span>
       <div class="prog"><i id="progBar"></i></div>
       <span class="meta" id="progTxt" style="text-align:left"></span>
+      <button class="btn ghost" id="quitBtn">Thoát</button>
       <button class="btn primary" id="submitBtn">Nộp bài</button>
     </div>
     <div class="layout">
@@ -174,11 +219,7 @@ button{font:inherit;cursor:pointer}
       <aside class="side">
         <h4>Bảng câu hỏi</h4>
         <div class="grid" id="grid"></div>
-        <div class="legend">
-          <span style="background:var(--blue)"></span>Đã làm &nbsp;
-          <span style="background:#fff;border:1px solid var(--rule)"></span>Chưa làm<br>
-          <span style="background:var(--amber)"></span>Đánh dấu xem lại
-        </div>
+        <div class="legend" id="legend"></div>
       </aside>
     </div>
   </section>
@@ -191,87 +232,224 @@ button{font:inherit;cursor:pointer}
         <div class="meta" style="text-align:left" id="rsTitle"></div>
         <div class="big" id="rsScore"></div>
         <div class="facts" id="rsFacts"></div>
-        <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+        <div class="noprint" style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
           <button class="btn primary" id="retryBtn">Làm lại đề này</button>
           <button class="btn" id="homeBtn">Chọn đề khác</button>
+          <button class="btn" id="rsHistBtn">🕘 Lịch sử</button>
           <button class="btn ghost" onclick="window.print()">In kết quả</button>
         </div>
       </div>
       <div>
-        <h4 class="meta" style="text-align:left;letter-spacing:.15em;text-transform:uppercase;margin:0 0 6px">Điểm theo chủ đề</h4>
+        <h4 class="sechead">ĐIỂM THEO CHỦ ĐỀ</h4>
         <div id="topicStats"></div>
         <div class="weak" id="weakBox"></div>
       </div>
     </div>
     <div class="filter">
       <button class="btn on" data-f="wrong">Câu sai & bỏ trống</button>
+      <button class="btn" data-f="right">Câu đúng</button>
       <button class="btn" data-f="all">Tất cả câu</button>
       <button class="btn" data-f="flag">Đã đánh dấu</button>
     </div>
     <div id="review"></div>
+  </section>
+
+  <!-- HISTORY -->
+  <section id="history" class="hidden">
+    <div class="histhead">
+      <h2>Lịch sử làm bài</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="histBack">← Về trang chủ</button>
+        <button class="btn ghost" id="histClear">Xóa lịch sử</button>
+      </div>
+    </div>
+    <div class="histsum" id="histSum"></div>
+    <div id="histList"></div>
   </section>
 </div>
 
 <script src="questions.js" charset="utf-8"></script>
 <script>
 const $ = s => document.querySelector(s);
-const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt = s => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const LET = "ABCD";
 const TOPICS = ["DevOps","VPS","Nginx","Linux","Git","Docker","Compose","CI/CD"];
 const COLORS = {DevOps:"#6b4fa0",VPS:"#2c5d9e",Nginx:"#2f7a4f",Linux:"#c98a16",Git:"#c2412b",Docker:"#1f7a8c",Compose:"#3b6e4a","CI/CD":"#8a3b6e"};
 const DURATION = 30 * 60;
+const HIST_KEY = "dq_hist", HIST_MAX = 60;
+
+// Tóm tắt lý thuyết theo từng bài trong đề cương, link tới đúng mục
+const DC = "https://huongcaoha.github.io/De_Cuong_On_Tap_Cuoi_Mon_Devops/";
+const REF = {
+  "overview": ["Tổng quan", "Toàn cảnh kiến trúc môn học", "4 mắt xích: Git → CI → Docker → VPS & Nginx. Mục tiêu: rút ngắn Time-to-Market, tự động hóa việc lặp lại, giữ Production ổn định (HA)."],
+  "s02-l01": ["S02 · L01", "Ảo hóa & phân biệt loại máy chủ", "Hypervisor Type-1 cài thẳng lên phần cứng (ESXi, Proxmox); Type-2 chạy trên OS có sẵn (VirtualBox). Máy vật lý scale kém, hợp ngân hàng; VPS chạm trần máy mẹ; Cloud Server auto-scaling vài giây, HA 99.99%."],
+  "s02-l02": ["S02 · L02", "Khởi tạo VPS & tầng mạng", "JVM cần ≥ 2GB RAM, chỉ có 1GB thì tạo Swap để tránh `oom-killer`. NVMe SSD cho IOPS cao. Public IP ra Internet, Private IP (VPC) cho App ↔ DB. Không có Static IP thì reboot đổi IP, tên miền (bản ghi A) bị đứt."],
+  "s02-l03": ["S02 · L03", "Bảo mật Firewall & SSH Key", "Không SSH bằng mật khẩu (brute-force), dùng Ed25519. Private key giữ ở máy cá nhân, public key lên `~/.ssh/authorized_keys`. `PasswordAuthentication no`, `PermitRootLogin no`. Firewall mặc định chặn hết, chỉ mở 22/80/443, khóa 3306 và 8080."],
+  "s02-l04": ["S02 · L04", "Nginx Reverse Proxy", "Nginx nhận 80/443 rồi `proxy_pass` vào backend `127.0.0.1:8080`. Lợi ích: ẩn IP/port backend, SSL Termination, cache & Gzip. `Host $host` và `X-Real-IP $remote_addr` giữ thông tin client. Luôn `nginx -t` rồi `reload`."],
+  "s02-lab": ["S02 · Lab 02", "VPS an toàn + Nginx proxy", "`ssh-keygen -f ~/.ssh/vps_key`, `ssh-copy-id`, `ssh -i`. UFW deny incoming, allow 22 và 80, kiểm tra `ufw status`. Backend bind `127.0.0.1:8080`; `http://IP` vào được, `http://IP:8080` bị Timeout là đúng."],
+  "s04-l01": ["S04 · L01", "3 vùng kiến trúc Git", "Git lưu dạng Snapshot. Working Directory (file Untracked/Modified) → `git add` → Staging Area (“giỏ hàng”) → `git commit` → Local Repository (`.git`, mỗi commit có mã SHA)."],
+  "s04-l02": ["S04 · L02", "Phân nhánh & Merge Conflict", "Branch là con trỏ ~41 bytes tới commit, tạo tức thì. Fast-forward: nhánh đích không có commit mới, chỉ dời con trỏ. 3-way: cả hai có commit mới → Merge Commit. Conflict khi hai nhánh sửa cùng dòng cùng file: xóa marker, `git add`, `git commit`."],
+  "s04-l03": ["S04 · L03", "Remote GitHub & Teamwork", "`git fetch` chỉ tải về, không đè code (an toàn). `git pull` = fetch + merge. Cấm push thẳng `main`: Feature branch → push → Pull Request → Code Review & CI pass → merge."],
+  "s04-l04": ["S04 · L04", "Stash, Restore, Reset & Revert", "`git stash` cất tạm, `git stash pop` lấy ra. `git restore <file>` hủy thay đổi chưa commit của 1 file. `git reset --hard` nguy hiểm, xóa sạch thay đổi. `git revert <hash>` tạo commit đảo ngược, an toàn khi làm nhóm."],
+  "s04-lab": ["S04 · Lab 04", "Merge Conflict & Revert", "master có env.txt; feature/test sửa TEST, feature/prod (tách từ master) sửa PROD. Merge test → Fast-forward; merge prod → CONFLICT. Sửa file, `git add`, `git commit`, xem bằng `git log --oneline --graph`."],
+  "s06-l01": ["S06 · L01", "Kiến trúc Linux & phân quyền", "Hardware → Kernel (PID 0) → Systemd (PID 1) → Shell → App. FHS: `/etc` config, `/var/log` log, `/opt` app bên thứ 3, `/home` user. r=4 w=2 x=1: `chmod 755` = rwxr-xr-x, `chmod 600` cho SSH key."],
+  "s06-l02": ["S06 · L02", "User, Group & Sudo", "Không chạy app bằng root. `adduser deployer` tạo user kèm home. `usermod -aG sudo,docker deployer` thêm nhóm (thiếu `-a` sẽ mất nhóm cũ). `id deployer` xem UID, GID, nhóm."],
+  "s06-l03": ["S06 · L03", "Network, Netplan & UFW", "`ss -tulnp` xem port LISTEN kèm PID. `ip a` xem IP, `ip route` xem gateway. Netplan ở `/etc/netplan/*.yaml`, thụt lề bằng dấu cách (cấm Tab), `sudo netplan apply`. UFW: allow 22/tcp, 80/tcp rồi enable."],
+  "s06-l04": ["S06 · L04", "Tiến trình & Systemd", "`free -h` xem RAM/Swap, `df -h` xem ổ cứng. `kill -15` (SIGTERM) tắt an toàn, `kill -9` (SIGKILL) diệt ngay. Service ở `/etc/systemd/system/`, `Restart=always` tự hồi phục; `daemon-reload`, `enable --now`."],
+  "s06-lab": ["S06 · Lab 06", "Systemd service tự hồi phục", "Script `/opt/app/run.sh` + `chmod +x`, tạo `ptit-daemon.service`, `daemon-reload`, `enable --now`, `status`. `pkill -9 -f run.sh`, đợi 3 giây, systemd tự bật lại."],
+  "s09-l01": ["S09 · L01", "VM vs Container", "“Build Once, Run Anywhere”. VM nặng vài GB, boot hàng phút vì có Guest OS riêng. Container vài chục MB, khởi động mili-giây vì dùng chung kernel host."],
+  "s09-l02": ["S09 · L02–03", "Dockerfile Gradle multi-stage", "Single-stage 800MB–1GB, lộ source. Stage 1 `gradle:8.5-jdk17-alpine`: COPY `build.gradle` trước `src` để tận dụng cache, `gradle bootJar --no-daemon -x test`. Stage 2 `eclipse-temurin:17-jre-alpine` (~150MB), user non-root, `COPY --from=builder` chỉ file jar, `EXPOSE 8080`, `ENTRYPOINT java -jar`."],
+  "s09-l04": ["S09 · L04", "Network & Volume cho MySQL", "Container là tạm thời; không gắn named volume vào `/var/lib/mysql` thì xóa container là mất DB. Compose tạo mạng bridge nội bộ, app gọi DB bằng service name: `jdbc:mysql://db:3306/ptit_db`."],
+  "s09-l05": ["S09 · L05", "Docker Compose + MySQL", "Service app (build, ports, `SPRING_DATASOURCE_*`, `depends_on: db`, networks) và db (`mysql:8.0`, `MYSQL_DATABASE`, `MYSQL_ROOT_PASSWORD`, volume). Khai báo `volumes:` và `networks:` (driver bridge) ở cấp gốc. `depends_on` chỉ đảm bảo thứ tự khởi động."],
+  "s09-lab": ["S09 · Lab 09", "Compose & dữ liệu bền vững", "`docker compose up -d` → `exec db mysql` chèn dữ liệu → `docker compose down` → `up -d` lại: dữ liệu vẫn còn nhờ named volume. Chỉ `down -v` mới xóa volume."],
+  "s11-l01": ["S11 · L01", "CI, Delivery & Deployment", "CI: mỗi commit tự chạy lint & unit test. Continuous Delivery: đóng gói sẵn, lên Prod cần duyệt tay. Continuous Deployment: pass test là tự lên Prod."],
+  "s11-l04": ["S11 · L02–04", "Pipeline & Secrets", "Workflow ở `.github/workflows/`. Job ci-test (checkout, setup-java temurin 17 + `cache: 'gradle'`, `chmod +x ./gradlew && ./gradlew test`) → job cd-deploy `needs: ci-test` (login-action, build-push-action `push: true`, tag latest + `github.sha`, appleboy/ssh-action). Secrets lưu ở Settings → Secrets and variables → Actions, gọi `${{ secrets.X }}`."],
+  "s11-lab": ["S11 · Lab 11", "CI/CD từ A–Z", "SSH key riêng cho runner (không passphrase), Docker Hub Access Token, 5 secrets: DOCKER_USERNAME, DOCKER_PASSWORD, VPS_HOST, VPS_USER, VPS_SSH_KEY. VPS: user vào nhóm docker, `/opt/app/docker-compose.yml`, deploy bằng `docker compose up -d --no-deps app`. Lỗi hay gặp: Host key verification failed, permission denied docker socket, Invalid username or password."],
+  "capstone": ["Capstone", "From Zero to Cloud Production", "VPS cài docker, nginx, ufw; Nginx cổng 80 proxy vào `127.0.0.1:8080`; compose bind `127.0.0.1:8080:8080` để chỉ Nginx gọi được; push main → CI/CD tự test, build, deploy."],
+};
+
+// Xác định bài lý thuyết cho từng câu dựa trên chủ đề và từ khóa
+function refOf(q) {
+  const s = q.q + " " + q.o[q.a];
+  const has = re => re.test(s);
+  switch (q.t) {
+    case "DevOps":
+      if (has(/Continuous/)) return "s11-l01";
+      if (has(/Build Once|máy em/)) return "s09-l01";
+      return "overview";
+    case "VPS":
+      if (has(/Lab 02/)) return "s02-lab";
+      if (has(/Hypervisor|Type-|vật lý|Cloud Server|VPS truyền thống|Auto-scaling|[Nn]gân hàng/)) return "s02-l01";
+      if (has(/RAM|Swap|oom|Static IP|Private IP|Public IP|DNS|Record|NVMe|IOPS|tên miền/)) return "s02-l02";
+      return "s02-l03";
+    case "Nginx":
+      if (has(/Lab 02/)) return "s02-lab";
+      if (has(/Capstone/)) return "capstone";
+      return "s02-l04";
+    case "Git":
+      if (has(/Lab 04/)) return "s04-lab";
+      if (has(/stash|revert|reset|restore|lịch sử|Hoàn tác|gỡ đúng/)) return "s04-l04";
+      if (has(/fetch|pull|Pull Request|\bPR\b|teamwork|Code Review|push thẳng|GitHub|clone/)) return "s04-l03";
+      if (has(/branch|nhánh|[Mm]erge|conflict|Fast-forward|3-way|<<<<|=======|con trỏ/)) return "s04-l02";
+      return "s04-l01";
+    case "Linux":
+      if (has(/Lab 06/)) return "s06-lab";
+      if (has(/Hình 4|Kernel/)) return "s06-l01";
+      if (has(/ss -|LISTEN|ip a|ip route|Gateway|[Nn]etplan|UFW|ufw|card mạng|Static IP|cổng HTTP/)) return "s06-l03";
+      if (has(/kill|SIG|systemd|systemctl|\.service|Restart=|free -h|df -h|RAM|ổ cứng|nohup|daemon/)) return "s06-l04";
+      if (has(/user|User|usermod|adduser|\bid\b|root|sudo|nhóm|deployer/)) return "s06-l02";
+      return "s06-l01";
+    case "Docker":
+      if (has(/Lab 09/)) return "s09-lab";
+      if (has(/VM|Guest|Build Once|máy em|nhẹ cỡ|chung kernel|khác container/)) return "s09-l01";
+      if (has(/[Vv]olume|\/var\/lib\/mysql|MySQL|mysql|MYSQL|stateless|tạm thời|Registry|pull|docker ps|compose down/)) return "s09-l04";
+      return "s09-l02";
+    case "Compose":
+      if (has(/Lab 09/)) return "s09-lab";
+      if (has(/Capstone|127\.0\.0\.1:8080/)) return "capstone";
+      return "s09-l05";
+    case "CI/CD":
+      if (has(/Continuous/)) return "s11-l01";
+      if (has(/Lab 11|[Tt]oken|passphrase|Host key|permission denied|Invalid username|SSH key cá nhân|tab Actions|bao nhiêu|VPS_SSH_KEY|DOCKER_PASSWORD|export DOCKER|--no-deps|nhóm docker/)) return "s11-lab";
+      return "s11-l04";
+  }
+  return "overview";
+}
+const refLink = id => DC + "#" + id;
+const refBox = q => {
+  const id = refOf(q), r = REF[id];
+  return `<div class="ref"><div class="rt"><span>📖 ÔN LẠI TRONG ĐỀ CƯƠNG · ${esc(r[0])}: ${esc(r[1])}</span><a href="${refLink(id)}" target="_blank" rel="noopener">Mở bài này ↗</a></div>${fmt(r[2])}</div>`;
+};
 
 $("#today").textContent = new Date().toLocaleDateString("vi-VN", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
-
 const who = $("#who");
 who.value = localStorage.getItem("dq_name") || "";
 who.oninput = () => localStorage.setItem("dq_name", who.value);
 
 const ALL = EXAMS.flatMap(e => e.qs);
 const examDefs = [...EXAMS, { id: "mix", name: "Đề trộn", sub: `40 câu ngẫu nhiên từ ngân hàng ${ALL.length} câu`, mix: true }];
+const defById = id => examDefs.find(d => d.id === id);
 const best = id => { try { return JSON.parse(localStorage.getItem("dq_best_" + id)); } catch { return null; } };
+const loadHist = () => { try { return JSON.parse(localStorage.getItem(HIST_KEY)) || []; } catch { return []; } };
+const saveHist = h => { try { localStorage.setItem(HIST_KEY, JSON.stringify(h.slice(0, HIST_MAX))); } catch {} };
+const fmtTime = s => `${s / 60 | 0} phút ${s % 60} giây`;
+const fmtDate = ts => new Date(ts).toLocaleString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric" });
+const MODE_NAME = { exam: "Thi thật", practice: "Ôn tập" };
+
+let MODE = localStorage.getItem("dq_mode") === "practice" ? "practice" : "exam";
+function drawMode() {
+  document.querySelectorAll("#modeSeg button").forEach(b => b.classList.toggle("on", b.dataset.m === MODE));
+  $("#modeHint").textContent = MODE === "exam"
+    ? "30 phút, hết giờ tự thu bài. Nộp xong mới xem đáp án và lý thuyết."
+    : "Không giới hạn giờ. Chọn đáp án là hiện ngay đúng/sai, giải thích và bài lý thuyết trong đề cương.";
+}
+document.querySelectorAll("#modeSeg button").forEach(b => b.onclick = () => { MODE = b.dataset.m; localStorage.setItem("dq_mode", MODE); drawMode(); });
 
 function renderHome() {
+  const hist = loadHist();
   $("#examList").innerHTML = examDefs.map((e, i) => {
-    const b = best(e.id);
+    const b = best(e.id), n = hist.filter(h => h.id === e.id).length;
     return `<button class="ecard ${e.mix ? "mix" : ""}" data-i="${i}">
-      <div class="no">${e.mix ? "NGẪU NHIÊN" : "MÃ ĐỀ 00" + (i + 1)}</div>
+      <div class="no">${e.mix ? "NGẪU NHIÊN" : "MÃ ĐỀ 0" + String(i + 1).padStart(2, "0")}</div>
       <h3>${e.name}</h3><div class="sub">${e.sub}</div>
-      <div class="best">${b ? `Cao nhất: <b>${b.score.toFixed(1)}</b>/10 · ${b.correct}/40` : "Chưa làm"}</div></button>`;
+      <div class="best">${b ? `Thi thật cao nhất: <b>${b.score.toFixed(1)}</b>/10` : "Chưa thi thật"}${n ? ` · ${n} lượt` : ""}</div></button>`;
   }).join("");
-  document.querySelectorAll(".ecard").forEach(el => el.onclick = () => start(examDefs[+el.dataset.i]));
+  document.querySelectorAll(".ecard").forEach(el => el.onclick = () => start(examDefs[+el.dataset.i], MODE));
   const cnt = {}; ALL.forEach(q => cnt[q.t] = (cnt[q.t] || 0) + 1);
   $("#topicChips").innerHTML = `Ngân hàng ${ALL.length} câu: ` + TOPICS.filter(t => cnt[t]).map(t => `<span class="chip" style="border-color:${COLORS[t]}">${t} · ${cnt[t]}</span>`).join("");
+  drawMode();
   show("home");
 }
 
 let S = null, tick = null;
-function start(def) {
+const elapsed = () => Math.round((Date.now() - S.t0) / 1000);
+function start(def, mode) {
   const base = def.mix ? shuffle(ALL).slice(0, 40) : shuffle(def.qs);
-  S = {
-    def, cur: 0, left: DURATION, done: false, filter: "wrong",
-    items: base.map(q => { const order = shuffle([0, 1, 2, 3]); return { q, order, ans: null, flag: false }; })
-  };
-  $("#exTitle").textContent = def.name + " · " + def.sub;
+  S = { def, mode, cur: 0, t0: Date.now(), done: false,
+        items: base.map(q => ({ q, order: shuffle([0, 1, 2, 3]), ans: null, flag: false })) };
+  $("#exTitle").innerHTML = `${esc(def.name)} · ${esc(def.sub)} <span class="badge ${mode}">${MODE_NAME[mode]}</span>`;
+  $("#submitBtn").textContent = mode === "exam" ? "Nộp bài" : "Kết thúc ôn tập";
+  $("#legend").innerHTML = mode === "exam"
+    ? `<span style="background:var(--blue)"></span>Đã làm &nbsp;<span style="background:#fff;border:1px solid var(--rule)"></span>Chưa làm<br><span style="background:var(--amber)"></span>Đánh dấu xem lại`
+    : `<span style="background:var(--green)"></span>Đúng &nbsp;<span style="background:var(--red)"></span>Sai &nbsp;<span style="background:#fff;border:1px solid var(--rule)"></span>Chưa làm<br><span style="background:var(--amber)"></span>Đánh dấu xem lại`;
   clearInterval(tick);
-  tick = setInterval(() => { S.left--; drawTimer(); if (S.left <= 0) finish(); }, 1000);
+  tick = setInterval(() => { drawTimer(); if (S.mode === "exam" && DURATION - elapsed() <= 0) finish(); }, 1000);
   drawTimer(); drawQ(); drawGrid(); show("exam");
 }
 
 function drawTimer() {
-  const m = Math.max(0, S.left) / 60 | 0, s = Math.max(0, S.left) % 60;
-  const t = $("#timer"); t.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-  t.classList.toggle("warn", S.left <= 300);
+  const t = $("#timer");
+  if (S.mode === "practice") {
+    const e = elapsed();
+    t.textContent = `Ôn tập · ${String(e / 60 | 0).padStart(2, "0")}:${String(e % 60).padStart(2, "0")}`;
+    t.className = "timer practice";
+    return;
+  }
+  const left = Math.max(0, DURATION - elapsed());
+  t.textContent = `${String(left / 60 | 0).padStart(2, "0")}:${String(left % 60).padStart(2, "0")}`;
+  t.className = "timer" + (left <= 300 ? " warn" : "");
 }
 
 function drawQ() {
   const it = S.items[S.cur], q = it.q;
+  const reveal = S.mode === "practice" && it.ans !== null;
+  const ok = it.ans === q.a;
+  const opts = it.order.map((oi, k) => {
+    let cls = "";
+    if (reveal) cls = "lock " + (oi === q.a ? "right" : oi === it.ans ? "wrong" : "");
+    else if (it.ans === oi) cls = "sel";
+    return `<button class="opt ${cls}" data-oi="${oi}"><span class="k">${LET[k]}</span><span>${fmt(q.o[oi])}</span></button>`;
+  }).join("");
+  const rightLetter = LET[it.order.indexOf(q.a)];
   $("#qcard").innerHTML = `
     <div class="qhead"><span>CÂU ${S.cur + 1} / ${S.items.length}</span><span style="color:${COLORS[q.t]}">● ${q.t}</span></div>
     <p class="qtext">${fmt(q.q)}</p>
-    ${it.order.map((oi, k) => `<button class="opt ${it.ans === oi ? "sel" : ""}" data-oi="${oi}"><span class="k">${LET[k]}</span><span>${fmt(q.o[oi])}</span></button>`).join("")}
+    ${opts}
+    ${reveal ? `<p class="fb ${ok ? "ok" : "no"}">${ok ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án đúng là ${rightLetter}.`}</p>
+      ${q.e ? `<div class="explain ${ok ? "" : "bad"}"><b>Vì sao:</b> ${fmt(q.e)}</div>` : ""}
+      ${refBox(q)}` : ""}
     <button class="flag ${it.flag ? "on" : ""}" id="flagBtn">${it.flag ? "★ Đã đánh dấu" : "☆ Đánh dấu xem lại"}</button>`;
   document.querySelectorAll("#qcard .opt").forEach(b => b.onclick = () => pick(+b.dataset.oi));
   $("#flagBtn").onclick = toggleFlag;
@@ -279,29 +457,46 @@ function drawQ() {
   $("#nextBtn").textContent = S.cur === S.items.length - 1 ? "Về câu 1 ↺" : "Câu sau →";
   const n = S.items.filter(x => x.ans !== null).length;
   $("#progBar").style.width = (n / S.items.length * 100) + "%";
-  $("#progTxt").textContent = `${n}/${S.items.length} câu`;
+  const c = S.items.filter(x => x.ans !== null && x.ans === x.q.a).length;
+  $("#progTxt").textContent = S.mode === "practice" ? `${n}/${S.items.length} câu · đúng ${c}` : `${n}/${S.items.length} câu`;
 }
 function pick(oi) {
-  S.items[S.cur].ans = oi; drawQ(); drawGrid();
+  const it = S.items[S.cur];
+  if (S.done) return;
+  if (S.mode === "practice") {
+    if (it.ans !== null) return;
+    it.ans = oi; drawQ(); drawGrid();
+    return;
+  }
+  it.ans = oi; drawQ(); drawGrid();
   setTimeout(() => { if (!S.done && S.cur < S.items.length - 1) go(S.cur + 1); }, 260);
 }
 function toggleFlag() { const it = S.items[S.cur]; it.flag = !it.flag; drawQ(); drawGrid(); }
-function go(i) { S.cur = (i + S.items.length) % S.items.length; drawQ(); drawGrid(); }
+function go(i) { S.cur = (i + S.items.length) % S.items.length; drawQ(); drawGrid(); window.scrollTo({ top: 0 }); }
 function drawGrid() {
-  $("#grid").innerHTML = S.items.map((it, i) =>
-    `<button class="cell ${it.ans !== null ? "done" : ""} ${it.flag ? "flagged" : ""} ${i === S.cur ? "cur" : ""}" data-i="${i}">${i + 1}</button>`).join("");
+  $("#grid").innerHTML = S.items.map((it, i) => {
+    let st = "";
+    if (it.ans !== null) st = S.mode === "practice" ? (it.ans === it.q.a ? "ok" : "no") : "done";
+    return `<button class="cell ${st} ${it.flag ? "flagged" : ""} ${i === S.cur ? "cur" : ""}" data-i="${i}">${i + 1}</button>`;
+  }).join("");
   document.querySelectorAll("#grid .cell").forEach(c => c.onclick = () => go(+c.dataset.i));
 }
 $("#prevBtn").onclick = () => go(S.cur - 1);
 $("#nextBtn").onclick = () => go(S.cur + 1);
 $("#submitBtn").onclick = () => {
   const blank = S.items.filter(x => x.ans === null).length;
-  if (blank && !confirm(`Còn ${blank} câu chưa làm. Vẫn nộp bài?`)) return;
+  const msg = S.mode === "exam" ? `Còn ${blank} câu chưa làm. Vẫn nộp bài?` : `Còn ${blank} câu chưa làm. Kết thúc ôn tập?`;
+  if (blank && !confirm(msg)) return;
   finish();
+};
+$("#quitBtn").onclick = () => {
+  if (!confirm("Thoát mà không lưu lượt làm bài này?")) return;
+  S.done = true; clearInterval(tick); renderHome();
 };
 
 document.addEventListener("keydown", e => {
   if (!S || S.done || $("#exam").classList.contains("hidden")) return;
+  if (e.target.tagName === "INPUT") return;
   const k = e.key.toUpperCase();
   const idx = "1234".indexOf(k) >= 0 ? "1234".indexOf(k) : LET.indexOf(k);
   if (idx >= 0 && k.length === 1) pick(S.items[S.cur].order[idx]);
@@ -310,54 +505,109 @@ document.addEventListener("keydown", e => {
   else if (k === "F") toggleFlag();
 });
 
+// Kết thúc lượt: lưu vào lịch sử rồi hiển thị kết quả
 function finish() {
   if (S.done) return;
   S.done = true; clearInterval(tick);
+  const total = S.items.length;
   const correct = S.items.filter(x => x.ans === x.q.a).length;
   const blank = S.items.filter(x => x.ans === null).length;
-  const score = Math.round(correct / S.items.length * 100) / 10;
-  const used = DURATION - Math.max(0, S.left);
-  const b = best(S.def.id);
-  if (!b || score > b.score) localStorage.setItem("dq_best_" + S.def.id, JSON.stringify({ score, correct }));
+  const score = Math.round(correct / total * 100) / 10;
+  const used = S.mode === "exam" ? Math.min(DURATION, elapsed()) : elapsed();
+  const rec = {
+    ts: Date.now(), id: S.def.id, mode: S.mode, name: who.value.trim(),
+    score, correct, blank, total, used,
+    items: S.items.map(x => ({ i: ALL.indexOf(x.q), o: x.order, a: x.ans, f: x.flag }))
+  };
+  const h = loadHist(); h.unshift(rec); saveHist(h);
+  if (S.mode === "exam") {
+    const b = best(S.def.id);
+    if (!b || score > b.score) localStorage.setItem("dq_best_" + S.def.id, JSON.stringify({ score, correct }));
+  }
+  renderResult(rec, false);
+}
 
-  $("#rsTitle").textContent = S.def.name + " · " + S.def.sub;
-  $("#rsScore").innerHTML = `${score.toFixed(1)}<small> / 10</small>`;
-  $("#rsFacts").innerHTML = `Đúng ${correct} · Sai ${S.items.length - correct - blank} · Bỏ trống ${blank}<br>Thời gian làm: ${used / 60 | 0} phút ${used % 60} giây`;
+let R = null;
+function renderResult(rec, fromHist) {
+  const def = defById(rec.id) || { id: rec.id, name: rec.id, sub: "" };
+  const items = rec.items.filter(x => ALL[x.i]).map((x, k) => ({ q: ALL[x.i], order: x.o, ans: x.a, flag: x.f, n: k + 1 }));
+  R = { rec, def, items, filter: "wrong", fromHist };
+  const wrong = rec.total - rec.correct - rec.blank;
+
+  $("#rsTitle").innerHTML = `${esc(def.name)} · ${esc(def.sub)} <span class="badge ${rec.mode}">${MODE_NAME[rec.mode]}</span>`;
+  $("#rsScore").innerHTML = `${rec.score.toFixed(1)}<small> / 10</small>`;
+  $("#rsFacts").innerHTML = `Đúng ${rec.correct} · Sai ${wrong} · Bỏ trống ${rec.blank}<br>Thời gian làm: ${fmtTime(rec.used)}<br>${fromHist ? "Lượt làm lúc " : "Đã lưu vào lịch sử · "}${fmtDate(rec.ts)}${rec.name ? " · " + esc(rec.name) : ""}`;
   const st = $("#stamp");
-  st.textContent = score >= 8 ? "Sẵn sàng" : score >= 5 ? "Đạt · Ôn thêm" : "Chưa đạt";
-  st.className = "stamp" + (score >= 8 ? " pass" : "");
+  st.textContent = rec.mode === "practice" ? "ÔN TẬP" : rec.score >= 8 ? "SẴN SÀNG" : rec.score >= 5 ? "ĐẠT · ÔN THÊM" : "CHƯA ĐẠT";
+  st.className = "stamp" + (rec.mode === "practice" ? " practice" : rec.score >= 8 ? " pass" : "");
 
   const per = {};
-  S.items.forEach(x => { const p = per[x.q.t] = per[x.q.t] || { n: 0, c: 0 }; p.n++; if (x.ans === x.q.a) p.c++; });
+  items.forEach(x => { const p = per[x.q.t] = per[x.q.t] || { n: 0, c: 0 }; p.n++; if (x.ans === x.q.a) p.c++; });
   const rows = TOPICS.filter(t => per[t]).map(t => ({ t, ...per[t], r: per[t].c / per[t].n }));
   $("#topicStats").innerHTML = rows.map(r =>
     `<div class="topicrow"><span>${r.t}</span><div class="tb"><i style="width:${r.r * 100}%;background:${COLORS[r.t]}"></i></div><span class="pct">${r.c}/${r.n}</span></div>`).join("");
-  const weak = rows.filter(r => r.r < 0.7).sort((a, b) => a.r - b.r);
-  $("#weakBox").innerHTML = weak.length
-    ? `<b>Cần ôn lại:</b> ${weak.map(w => w.t).join(", ")}. Lọc “Câu sai” bên dưới và đọc kỹ phần giải thích.`
-    : `<b>Không có chủ đề nào dưới 70%.</b> Thử Đề trộn để kiểm tra độ ổn định.`;
-  S.filter = "wrong"; drawReview(); show("result");
+
+  // Gom câu sai theo bài lý thuyết để biết cần đọc lại phần nào
+  const miss = {};
+  items.filter(x => x.ans !== x.q.a).forEach(x => { const id = refOf(x.q); miss[id] = (miss[id] || 0) + 1; });
+  const lessons = Object.entries(miss).sort((a, b) => b[1] - a[1]);
+  $("#weakBox").innerHTML = lessons.length
+    ? `<b>Cần đọc lại trong đề cương:</b><ul>${lessons.map(([id, n]) =>
+        `<li><a href="${refLink(id)}" target="_blank" rel="noopener">${esc(REF[id][0])}: ${esc(REF[id][1])}</a> · sai ${n} câu</li>`).join("")}</ul>`
+    : `<b>Không sai câu nào.</b> Thử Đề trộn để kiểm tra độ ổn định.`;
+  drawReview(); show("result");
 }
 
 function drawReview() {
-  document.querySelectorAll(".filter .btn").forEach(b => b.classList.toggle("on", b.dataset.f === S.filter));
-  const list = S.items.map((x, i) => ({ ...x, i })).filter(x =>
-    S.filter === "all" ? true : S.filter === "flag" ? x.flag : x.ans !== x.q.a);
+  document.querySelectorAll(".filter .btn").forEach(b => b.classList.toggle("on", b.dataset.f === R.filter));
+  const list = R.items.filter(x =>
+    R.filter === "all" ? true : R.filter === "flag" ? x.flag : R.filter === "right" ? x.ans === x.q.a : x.ans !== x.q.a);
   $("#review").innerHTML = list.length ? list.map(x => {
     const ok = x.ans === x.q.a;
     return `<div class="rv">
-      <div class="qhead"><span>CÂU ${x.i + 1} · ${ok ? "✓ ĐÚNG" : x.ans === null ? "— BỎ TRỐNG" : "✗ SAI"}${x.flag ? " · ★" : ""}</span><span style="color:${COLORS[x.q.t]}">● ${x.q.t}</span></div>
+      <div class="qhead"><span>CÂU ${x.n} · ${ok ? "✓ ĐÚNG" : x.ans === null ? "— BỎ TRỐNG" : "✗ SAI"}${x.flag ? " · ★" : ""}</span><span style="color:${COLORS[x.q.t]}">● ${x.q.t}</span></div>
       <p class="qtext">${fmt(x.q.q)}</p>
-      ${x.order.map((oi, k) => `<div class="opt ${oi === x.q.a ? "right" : oi === x.ans ? "wrong" : ""}"><span class="k">${LET[k]}</span><span>${fmt(x.q.o[oi])}</span></div>`).join("")}
-      ${x.q.e ? `<div class="explain ${ok ? "" : "bad"}">${fmt(x.q.e)}</div>` : ""}
+      ${x.order.map((oi, k) => `<div class="opt ${oi === x.q.a ? "right" : oi === x.ans ? "wrong" : ""}"><span class="k">${LET[k]}</span><span>${fmt(x.q.o[oi])}</span>${oi === x.ans ? `<span class="you">← bạn chọn</span>` : ""}</div>`).join("")}
+      ${x.q.e ? `<div class="explain ${ok ? "" : "bad"}"><b>Vì sao:</b> ${fmt(x.q.e)}</div>` : ""}
+      ${refBox(x.q)}
     </div>`;
-  }).join("") : `<p class="meta" style="text-align:left">Không có câu nào trong mục này. 🎉</p>`;
+  }).join("") : `<p class="meta" style="text-align:left">Không có câu nào trong mục này.</p>`;
 }
-document.querySelectorAll(".filter .btn").forEach(b => b.onclick = () => { S.filter = b.dataset.f; drawReview(); });
-$("#retryBtn").onclick = () => start(S.def);
+document.querySelectorAll(".filter .btn").forEach(b => b.onclick = () => { R.filter = b.dataset.f; drawReview(); });
+$("#retryBtn").onclick = () => start(defById(R.rec.id) || examDefs[0], R.rec.mode);
 $("#homeBtn").onclick = renderHome;
+$("#rsHistBtn").onclick = renderHistory;
 
-function show(id) { ["home", "exam", "result"].forEach(s => $("#" + s).classList.toggle("hidden", s !== id)); window.scrollTo(0, 0); }
+function renderHistory() {
+  const h = loadHist();
+  const ex = h.filter(r => r.mode === "exam");
+  const avg = ex.length ? (ex.reduce((s, r) => s + r.score, 0) / ex.length).toFixed(1) : "—";
+  $("#histSum").textContent = h.length
+    ? `${h.length} lượt · Thi thật ${ex.length} lượt, điểm trung bình ${avg}/10 · Ôn tập ${h.length - ex.length} lượt · Lưu trên trình duyệt này (tối đa ${HIST_MAX} lượt gần nhất)`
+    : "";
+  $("#histList").innerHTML = h.length ? h.map((r, k) => {
+    const d = defById(r.id) || { name: r.id, sub: "" };
+    const wrong = r.total - r.correct - r.blank;
+    const cls = r.mode === "practice" ? "" : r.score >= 8 ? "pass" : r.score < 5 ? "fail" : "";
+    return `<div class="hrow">
+      <div class="when">${fmtDate(r.ts)}${r.name ? "<br>" + esc(r.name) : ""}</div>
+      <div class="name">${esc(d.name)} <span class="badge ${r.mode}">${MODE_NAME[r.mode]}</span><small>${esc(d.sub)}</small></div>
+      <div class="hscore ${cls}">${r.score.toFixed(1)}</div>
+      <div class="stat">✓ Đúng ${r.correct} · ✗ Sai ${wrong} · Trống ${r.blank}<br>${fmtTime(r.used)}</div>
+      <button class="btn" data-k="${k}">Xem lại</button>
+    </div>`;
+  }).join("") : `<div class="empty">Chưa có lượt làm bài nào. Chọn một đề ở trang chủ để bắt đầu.</div>`;
+  document.querySelectorAll("#histList .btn").forEach(b => b.onclick = () => renderResult(loadHist()[+b.dataset.k], true));
+  show("history");
+}
+$("#histBtn").onclick = renderHistory;
+$("#histBack").onclick = renderHome;
+$("#histClear").onclick = () => {
+  if (!loadHist().length || !confirm("Xóa toàn bộ lịch sử làm bài trên trình duyệt này?")) return;
+  localStorage.removeItem(HIST_KEY); renderHistory();
+};
+
+function show(id) { ["home", "exam", "result", "history"].forEach(s => $("#" + s).classList.toggle("hidden", s !== id)); window.scrollTo(0, 0); }
 window.addEventListener("beforeunload", e => { if (S && !S.done && !$("#exam").classList.contains("hidden")) { e.preventDefault(); e.returnValue = ""; } });
 renderHome();
 </script>
