@@ -4,16 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Phòng thi DevOps Fundamental · Trắc nghiệm 40 câu 30 phút</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Serif:ital,wght@0,700;1,700&family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
 :root{
   --paper:#f5efe2; --paper2:#fbf7ee; --ink:#1d2a44; --muted:#6b6455; --rule:#d9cfba;
   --red:#c2412b; --green:#2f7a4f; --amber:#c98a16; --blue:#2c5d9e;
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
-  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"Be Vietnam Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Noto Serif","Times New Roman",Times,serif;
+  --mono:"JetBrains Mono",ui-monospace,"Cascadia Mono","Courier New",monospace;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.5;
+h1,h3,.big{font-family:var(--serif)}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(44,93,158,.07) 31px 32px);
   padding-bottom:72px;}
 .wrap{max-width:1080px;margin:0 auto;padding:28px 20px}
@@ -206,7 +212,7 @@ button{font:inherit;cursor:pointer}
   </section>
 </div>
 
-<script src="questions.js"></script>
+<script src="questions.js" charset="utf-8"></script>
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
